@@ -1,0 +1,106 @@
+{
+  "name": "sham-ui-unsafe",
+  "description": "Runtime for {% unsafe %}",
+  "author": "Eugeny Burnashov <shamcode@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sham-ui/sham-ui-unsafe.git"
+  },
+  "scripts": {
+    "start": "node demo-app/server.js",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watchAll",
+    "build:silent": "webpack --mode=production",
+    "build": "yarn build:silent --progress",
+    "size": "yarn build && size-limit",
+    "prepublish": "yarn size && yarn build",
+    "doc:generate": "documentation readme src/index.js --section=API",
+    "doc:lint": "documentation lint src/**"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/plugin-transform-modules-umd": "^7.0.0",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/runtime": "^7.4.5",
+    "@size-limit/preset-small-lib": "^2.1.6",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.2.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-jest": "^22.6.4",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "documentation": "^12.1.2",
+    "jest": "^23.6.0",
+    "jest-runner-eslint": "^0.7.4",
+    "webpack": "~4.22.0",
+    "webpack-cli": "^3.3.4"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 3,
+          "shippedProposals": true,
+          "exclude": []
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-transform-modules-umd"
+    ]
+  },
+  "stylelint": {
+    "extends": "stylelint-config-recommended-scss"
+  },
+  "jest": {
+    "projects": [
+      {
+        "displayName": "test",
+        "moduleFileExtensions": [
+          "js",
+          "json",
+          "sfc"
+        ],
+        "transform": {
+          "^.+\\.js$": "babel-jest"
+        },
+        "collectCoverageFrom": [
+          "src/**/*.js"
+        ],
+        "testPathIgnorePatterns": [
+          "<rootDir>/node_modules/"
+        ],
+        "testURL": "http://sham-ui-unsafe.example.com"
+      },
+      {
+        "runner": "jest-runner-eslint",
+        "displayName": "eslint",
+        "moduleFileExtensions": [
+          "js",
+          "json"
+        ],
+        "testMatch": [
+          "<rootDir>/src/**/*.*"
+        ]
+      }
+    ]
+  },
+  "size-limit": [
+    {
+      "path": "index.js",
+      "limit": "1 KB"
+    }
+  ],
+  "browserslist": [
+    "> 1%",
+    "not dead",
+    "not ie <= 11"
+  ]
+}
